@@ -16,7 +16,7 @@ runs:
     - run: |
         ./.github/actions/check-crowdin-branch-progress/check-progress.sh \
           -p ${{ inputs.project-id }} \
-          -b ${{ inputs.branch-name }} \
+          -b ${{ inputs.branch-id }} \
           -t ${{ inputs.personal-token }}
       id: branch-progress
       shell: bash
