@@ -29,15 +29,23 @@ if [ -n "$BRANCH_ID" ]; then
     -H "Authorization: Bearer 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110")
   exit_code_branch=$?
 
-  progress="0"
+  is_ready=true
 
   for i in {0..3}
   do
     BRANCH_DATA=$(echo "$BRANCH_PROGRESS" | jq -r ".data[$i]")
     translationProgress=$(echo "$BRANCH_DATA" | jq '.data.translationProgress')
     approvalProgress=$(echo "$BRANCH_DATA" | jq '.data.approvalProgress')
-    echo "$translationProgress"
-    echo "$approvalProgress"
+
+    if [ "$translationProgress" -eq 100 ] && [ "$approvalProgress" -eq 100 ]; then
+      echo "READY"
+      echo "$translationProgress"
+      echo "$approvalProgress"
+    else
+      echo "NOT READY"
+      echo "$translationProgress"
+      echo "$approvalProgress"
+    fi
   done
 
   # for i in "${BRANCHES[@]}"; do
