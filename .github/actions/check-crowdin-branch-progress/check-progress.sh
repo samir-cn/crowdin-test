@@ -37,7 +37,7 @@ if [ -n "$BRANCH_ID" ]; then
 
   for i in {1..4}
   do
-    BRANCH_DATA=$(echo "$BRANCHES" | jq -r '.[$i]')
+    BRANCH_DATA=$(echo "$BRANCHES" | jq -r ".[$i]")
     echo "$BRANCH_DATA"
   done
 
