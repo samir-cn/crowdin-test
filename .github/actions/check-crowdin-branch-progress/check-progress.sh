@@ -29,15 +29,19 @@ if [ -n "$BRANCH_ID" ]; then
     -H "Authorization: Bearer 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110")
   exit_code_branch=$?
 
-  BRANCHES=$(echo "$BRANCH_PROGRESS" | jq -r '.data[0]')
+  BRANCHES=$(echo "$BRANCH_PROGRESS" | jq -r '.data')
   echo "$BRANCHES"
   echo "separator ---->"
 
   progress="0"
 
-  for i in "${BRANCHES[@]}"; do
-    echo "$i"
-    echo "separator ---->"
+  for i in {1..4}
+  do
+    BRANCH_DATA=$(echo "$BRANCHES" | jq -r '.[$i]')
+    echo "$BRANCH_DATA"
+  done
+
+  # for i in "${BRANCHES[@]}"; do
     # translationProgress=$(echo "$i" | jq '.data.translationProgress')
     # approvalProgress=$(echo "$i" | jq '.data.approvalProgress')
     # echo "$translationProgress"
@@ -47,7 +51,7 @@ if [ -n "$BRANCH_ID" ]; then
     #   progress="100"
     #   break
     # fi
-  done
+  # done
 
   echo "progress=$progress" >> $GITHUB_OUTPUT
   
