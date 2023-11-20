@@ -30,11 +30,14 @@ if [ -n "$BRANCH_ID" ]; then
   exit_code_branch=$?
 
   BRANCHES=$(echo "$BRANCH_PROGRESS" | jq -r '.data')
+  echo "$BRANCHES"
+  echo "separator ---->"
 
   progress="0"
 
   for i in "${BRANCHES[@]}"; do
     echo "$i"
+    echo "separator ---->"
     # translationProgress=$(echo "$i" | jq '.data.translationProgress')
     # approvalProgress=$(echo "$i" | jq '.data.approvalProgress')
     # echo "$translationProgress"
