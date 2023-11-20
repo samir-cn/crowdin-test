@@ -37,10 +37,7 @@ if [ -n "$BRANCH_ID" ]; then
     translationProgress=$(echo "$BRANCH_DATA" | jq '.data.translationProgress')
     approvalProgress=$(echo "$BRANCH_DATA" | jq '.data.approvalProgress')
 
-    echo "$translationProgress"
-    echo "$approvalProgress"
     if [ "$translationProgress" -ne 100 ] || [ "$approvalProgress" -ne 100 ]; then
-      echo "NOT_READY"
       IS_READY="false"
       break
     fi
