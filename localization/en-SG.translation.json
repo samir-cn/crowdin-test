@@ -1590,5 +1590,6 @@
   "duration": "Duration",
   "promoted_listing.post_listing_success_message": "Promoted Listing Active",
   "generic.error": "Something went wrong: {error}",
-  "test-translation": "Translation to test workflow"
+  "test-translation": "Translation to test workflow",
+  "test-new-translation": "Test translation for webhook"
 }
