@@ -7,14 +7,14 @@ usage() {
   echo "Usage: $(basename "$0") [-p project id] [-b branch id]"
   echo "-p: project id"
   echo "-b: branch id"
-  # echo "-t: personal token"
+  echo "-t: personal token"
 }
 
 while getopts 'p:b:t:h' opt; do
   case "$opt" in
     p) PROJECT_ID=$OPTARG ;;
     b) BRANCH_ID=$OPTARG ;;
-    # t) PERSONAL_TOKEN=$OPTARG ;;
+    t) PERSONAL_TOKEN=$OPTARG ;;
     h) usage; exit 0 ;;
     ?) usage; exit 1 ;;
   esac
