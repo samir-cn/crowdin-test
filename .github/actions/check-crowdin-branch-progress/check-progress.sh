@@ -24,14 +24,6 @@ echo "::group::Check Crowdin branch progress"
 
 echo "$BRANCH_ID"
 
-TEST=$(curl -s \
-  --request GET "https://api.crowdin.com/api/v2/projects/$PROJECT_ID/branches?name=issue-MPT-100-test-crowdin" \
-  -H 'Content-type: application/json' \
-  -H "Authorization: Bearer 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110")
-exit_code=$?
-
-echo "$TEST"
-
 if [ -n "$BRANCH_ID" ]; then
   echo "https://api.crowdin.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/languages/progress"
   BRANCH_PROGRESS=$(curl -s \
