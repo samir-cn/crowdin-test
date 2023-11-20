@@ -36,8 +36,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Check branch name
-        uses: propertyguru/mobile/actions/branch@v3.0.1
+      # - name: Check branch name
+      #   uses: propertyguru/mobile/actions/branch@v3.0.1
 
       - name: Extract branch name and format
         id: format-branch
@@ -82,8 +82,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Check branch name
-        uses: propertyguru/mobile/actions/branch@v3.0.1
+      # - name: Check branch name
+      #   uses: propertyguru/mobile/actions/branch@v3.0.1
 
       - name: Check client payload
         run: echo ${{ github.event.client_payload }}
@@ -126,8 +126,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Check branch name
-        uses: propertyguru/mobile/actions/branch@v3.0.1
+      # - name: Check branch name
+      #   uses: propertyguru/mobile/actions/branch@v3.0.1
 
       - name: Check changed files
         id: changed-files
