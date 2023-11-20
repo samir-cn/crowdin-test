@@ -16,7 +16,7 @@ outputs:
     value: ${{ steps.branch-progress.outputs.branch-name }}
   is-ready:
     description: "Indicator if branch is ready to download translations"
-    value: ${{ steps.branch-progress-bash.outputs.is-ready }}
+    value: ${{ steps.branch-progress.outputs.is-ready }}
 runs:
   using: 'composite'
   steps:

@@ -97,7 +97,7 @@ jobs:
           personal-token: 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110
 
       - name: Download translations
-        run: "echo ${{ steps.branch-progress.outputs.is-ready == 'true' }}"
+        run: "echo ${{ steps.branch-progress.outputs.is-ready }} ${{ steps.branch-progress.outputs.branch-name }}"
         # if: ${{ steps.branch-progress.outputs.progress == '100' }}
 #         uses: crowdin/github-action@v1
   #         with:
