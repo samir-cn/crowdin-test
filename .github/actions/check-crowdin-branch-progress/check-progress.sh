@@ -46,7 +46,8 @@ if [ -n "$BRANCH_ID" ]; then
     fi
   done
 
-  if [ $IS_READY ]; then
+  BRANCH_NAME=""
+  if $IS_READY; then
     BRANCH_DATA=$(curl -s \
       --request GET "https://api.crowdin.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID" \
       -H 'Content-type: application/json' \
