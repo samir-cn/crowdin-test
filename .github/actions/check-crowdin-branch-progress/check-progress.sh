@@ -28,10 +28,10 @@ if [ -n "$BRANCH_ID" ]; then
     -H 'Content-type: application/json' \
     -H "Authorization: Bearer 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110")
   exit_code_branch=$?
-  wait
+  sleep 2
 
   BRANCHES=$(echo "$BRANCH_PROGRESS" | jq -r '.data')
-  wait
+  sleep 2
   echo "$BRANCHES"
   echo "separator ---->"
   echo "${#BRANCHES[@]}"
