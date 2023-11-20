@@ -36,15 +36,15 @@ if [ -n "$BRANCH_ID" ]; then
 
   for i in "${BRANCHES[@]}"; do
     echo "$i"
-    translationProgress=$(echo "$i" | jq '.data.translationProgress')
-    approvalProgress=$(echo "$i" | jq '.data.approvalProgress')
-    echo "$translationProgress"
-    echo "$approvalProgress"
+    # translationProgress=$(echo "$i" | jq '.data.translationProgress')
+    # approvalProgress=$(echo "$i" | jq '.data.approvalProgress')
+    # echo "$translationProgress"
+    # echo "$approvalProgress"
 
-    if [ "$translationProgress" -eq 100 ] || [ "$approvalProgress" -eq 100 ]; then
-      progress="100"
-      break
-    fi
+    # if [ "$translationProgress" -eq 100 ] || [ "$approvalProgress" -eq 100 ]; then
+    #   progress="100"
+    #   break
+    # fi
   done
 
   echo "progress=$progress" >> $GITHUB_OUTPUT
