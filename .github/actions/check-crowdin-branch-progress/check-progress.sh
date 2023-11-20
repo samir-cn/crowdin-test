@@ -33,7 +33,7 @@ if [ -n "$BRANCH_ID" ]; then
 
   for i in {0..3}
   do
-    BRANCH_DATA=$(echo "$BRANCH_PROGRESS" | jq -r ".data.[$i]")
+    BRANCH_DATA=$(echo "$BRANCH_PROGRESS" | jq -r ".data[$i]")
     translationProgress=$(echo "$BRANCH_DATA" | jq '.data.translationProgress')
     approvalProgress=$(echo "$BRANCH_DATA" | jq '.data.approvalProgress')
     echo "$translationProgress"
