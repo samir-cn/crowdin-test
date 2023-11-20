@@ -36,6 +36,7 @@ if [ -n "$BRANCH_ID" ]; then
   progress="0"
 
   for i in "${BRANCHES[@]}"; do
+    echo "$i"
     translationProgress=$(echo "$i" | jq '.data.translationProgress')
     approvalProgress=$(echo "$i" | jq '.data.approvalProgress')
     echo "$translationProgress"
