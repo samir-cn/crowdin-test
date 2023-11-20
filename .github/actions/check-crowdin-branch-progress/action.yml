@@ -10,6 +10,13 @@ inputs:
   personal-token:
     description: 'Personal token from Crowdin to perform API request'
     required: true
+outputs:
+  branch-name:
+    description: "Branch name from Crowdin API"
+    value: ${{ steps.branch-progress.outputs.branch-name }}
+  is-ready:
+    description: "Indicator if branch is ready to download translations"
+    value: ${{ steps.branch-progress-bash.outputs.is-ready }}
 runs:
   using: 'composite'
   steps:
