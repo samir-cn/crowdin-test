@@ -29,7 +29,7 @@ if [ -n "$BRANCH_ID" ]; then
     -H "Authorization: Bearer $PERSONAL_TOKEN")
   exit_code_branch=$?
 
-  IS_READY=true
+  IS_READY="true"
 
   for i in {0..3}
   do
@@ -41,7 +41,7 @@ if [ -n "$BRANCH_ID" ]; then
     echo "$approvalProgress"
     if [ "$translationProgress" -ne 100 ] || [ "$approvalProgress" -ne 100 ]; then
       echo "NOT_READY"
-      IS_READY=false
+      IS_READY="false"
       break
     fi
   done
