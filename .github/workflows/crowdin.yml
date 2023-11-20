@@ -94,21 +94,20 @@ jobs:
         with:
           branch-id: ${{ github.event.client_payload.branchId }}
           project-id: ${{ env.CROWDIN_PROJECT_ID }}
-          personal-token: 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110
+          personal-token: ${{ secrets.CROWDIN_TOKEN }}
 
       - name: Download translations
-        run: "echo ${{ steps.branch-progress.outputs.is-ready }} ${{ steps.branch-progress.outputs.branch-name }}"
-        # if: ${{ steps.branch-progress.outputs.progress == '100' }}
-#         uses: crowdin/github-action@v1
-  #         with:
-  #           download_translations: true
-  #           crowdin_branch_name: ${{ steps.format-branch.outputs.branch }}
-  #           config: 'crowdin.yml'
-  #           pull_request_base_branch_name: ${{ github.event.pull_request.head.ref }}
-  #         env:
-  #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #           CROWDIN_PROJECT_ID: ${{ env.CROWDIN_PROJECT_ID }}
-  #           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_TOKEN }}
+        if: steps.branch-progress.outputs.is-ready == 'true'
+        uses: crowdin/github-action@v1
+        with:
+          download_translations: true
+          crowdin_branch_name: ${{ steps.branch-progress.outputs.branch-name }}
+          config: 'crowdin.yml'
+          pull_request_base_branch_name: ${{ github.event.pull_request.head.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CROWDIN_PROJECT_ID: ${{ env.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_TOKEN }}
 
   upload-and-delete:
     name: Upload latest sources to the main branch on Crowdin and delete the old one
