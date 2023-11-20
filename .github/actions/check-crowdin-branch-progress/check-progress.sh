@@ -23,6 +23,8 @@ done
 echo "::group::Check Crowdin branch progress"
 
 echo "$BRANCH_ID"
+echo "Test"
+echo "$PERSONAL_TOKEN"
 
 if [ -n "$BRANCH_ID" ]; then
   BRANCH_PROGRESS=$(curl \
