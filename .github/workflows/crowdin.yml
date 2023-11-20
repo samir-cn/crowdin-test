@@ -93,7 +93,7 @@ jobs:
         with:
           branch-id: ${{ github.event.client_payload.branchId }}
           project-id: ${{ env.CROWDIN_PROJECT_ID }}
-          personal-token: ${{ secrets.CROWDIN_TOKEN }}
+          personal-token: 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110
 
       - name: Extract branch name and format
         id: format-branch
