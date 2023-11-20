@@ -33,19 +33,21 @@ if [ -n "$BRANCH_ID" ]; then
 
   BRANCHES=$(echo "$BRANCH_PROGRESS" | jq -r '.data')
 
-  should_proceed=true
+  progress="0"
 
   for i in "${BRANCHES[@]}"; do
     translationProgress=$(echo "$i" | jq '.data.translationProgress')
     approvalProgress=$(echo "$i" | jq '.data.approvalProgress')
+    echo "$translationProgress"
+    echo "$approvalProgress"
 
-    if [ "$translationProgress" -lt 100 ] || [ "$approvalProgress" -lt 100 ]; then
-      should_proceed=false
+    if [ "$translationProgress" -eq 100 ] || [ "$approvalProgress" -eq 100 ]; then
+      progress="100"
       break
     fi
   done
 
-  echo "progress=$should_proceed" >> $GITHUB_OUTPUT
+  echo "progress=$progress" >> $GITHUB_OUTPUT
   
   if [ $exit_code_branch -ne 0 ]; then
     echo "Error with getting current branch progress from Crowdin"

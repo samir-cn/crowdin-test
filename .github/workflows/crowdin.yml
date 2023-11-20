@@ -86,7 +86,7 @@ jobs:
       #   uses: propertyguru/mobile/actions/branch@v3.0.1
 
       - name: Check client payload
-        run: echo ${{ github.event.client_payload }}
+        run: echo ${{ github.event.client_payload.branchId }}
 
       - name: Check branch progress on Crowdin
         uses: ./.github/actions/check-crowdin-branch-progress
@@ -104,7 +104,7 @@ jobs:
           echo "branch=$FORMATTED_BRANCH" >> $GITHUB_OUTPUT
 
       - name: Download translations
-        run: "echo ${{ steps.branch-progress.outputs.should_proceed }}"
+        run: "echo ${{ steps.branch-progress.outputs.progress }}"
         # if: ${{ steps.branch-progress.outputs.progress == '100' }}
 #         uses: crowdin/github-action@v1
   #         with:
