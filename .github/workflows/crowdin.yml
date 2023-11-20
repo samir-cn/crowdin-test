@@ -104,7 +104,7 @@ jobs:
           echo "branch=$FORMATTED_BRANCH" >> $GITHUB_OUTPUT
 
       - name: Download translations
-        run: "echo ${{ steps.branch-progress.outputs.progress }}"
+        run: "echo ${{ steps.branch-progress.outputs.is_ready }}"
         # if: ${{ steps.branch-progress.outputs.progress == '100' }}
 #         uses: crowdin/github-action@v1
   #         with:

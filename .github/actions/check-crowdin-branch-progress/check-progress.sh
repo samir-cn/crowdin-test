@@ -26,10 +26,10 @@ if [ -n "$BRANCH_ID" ]; then
   BRANCH_PROGRESS=$(curl -s \
     --request GET "https://api.crowdin.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/languages/progress" \
     -H 'Content-type: application/json' \
-    -H "Authorization: Bearer 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110")
+    -H "Authorization: Bearer $PERSONAL_TOKEN")
   exit_code_branch=$?
 
-  is_ready=true
+  IS_READY=true
 
   for i in {0..3}
   do
@@ -37,30 +37,23 @@ if [ -n "$BRANCH_ID" ]; then
     translationProgress=$(echo "$BRANCH_DATA" | jq '.data.translationProgress')
     approvalProgress=$(echo "$BRANCH_DATA" | jq '.data.approvalProgress')
 
-    if [ "$translationProgress" -eq 100 ] && [ "$approvalProgress" -eq 100 ]; then
-      echo "READY"
-      echo "$translationProgress"
-      echo "$approvalProgress"
-    else
-      echo "NOT READY"
-      echo "$translationProgress"
-      echo "$approvalProgress"
+    if [ "$translationProgress" -ne 100 ] && [ "$approvalProgress" -ne 100 ]; then
+      IS_READY=false
+      break
     fi
   done
 
-  # for i in "${BRANCHES[@]}"; do
-    # translationProgress=$(echo "$i" | jq '.data.translationProgress')
-    # approvalProgress=$(echo "$i" | jq '.data.approvalProgress')
-    # echo "$translationProgress"
-    # echo "$approvalProgress"
+  if [ $IS_READY ]; then
+    BRANCH_DATA=$(curl -s \
+      --request GET "https://api.crowdin.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID" \
+      -H 'Content-type: application/json' \
+      -H "Authorization: Bearer $PERSONAL_TOKEN")
+    BRANCH_NAME=$(echo "$BRANCH_DATA" | jq -r ".data.name")
+  fi
 
-    # if [ "$translationProgress" -eq 100 ] || [ "$approvalProgress" -eq 100 ]; then
-    #   progress="100"
-    #   break
-    # fi
-  # done
-
-  echo "progress=$progress" >> $GITHUB_OUTPUT
+  echo "$BRANCH_NAME"
+  echo "branch-name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+  echo "is-ready=$IS_READY" >> $GITHUB_OUTPUT
   
   if [ $exit_code_branch -ne 0 ]; then
     echo "Error with getting current branch progress from Crowdin"
