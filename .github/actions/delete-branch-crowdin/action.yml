@@ -1,0 +1,21 @@
+name: 'Delete branch'
+description: 'Deletes the branch in Crowdin project that current PR has created'
+inputs:
+  project-id:
+    description: 'Project identifier from Crowdin'
+    required: true
+  branch-name:
+    description: 'Branch name to get the correct branch in Crowdin'
+    required: true
+  personal-token:
+    description: 'Personal token from Crowdin to perform API request'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        ./.github/actions/delete-branch-crowdin/delete.sh \
+          -p ${{ inputs.project-id }} \
+          -b ${{ inputs.branch-name }} \
+          -t ${{ inputs.personal-token }}
+      shell: bash

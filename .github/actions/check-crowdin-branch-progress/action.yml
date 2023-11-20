@@ -1,0 +1,22 @@
+name: 'Check branch progress'
+description: 'Checks the progress pf branch on Crowdin'
+inputs:
+  project-id:
+    description: 'Project identifier from Crowdin'
+    required: true
+  branch-id:
+    description: 'Branch name to get the correct branch in Crowdin'
+    required: true
+  personal-token:
+    description: 'Personal token from Crowdin to perform API request'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        ./.github/actions/check-crowdin-branch-progress/check-progress.sh \
+          -p ${{ inputs.project-id }} \
+          -b ${{ inputs.branch-name }} \
+          -t ${{ inputs.personal-token }}
+      id: branch-progress
+      shell: bash

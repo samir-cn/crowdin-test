@@ -1,0 +1,8 @@
+project_id: '573871'
+api_token: 5a10c8997dbe5a7783cc15bcf6ee98cd2660360c2db5dc515825527d344b329df2a6e8e486284110
+branch: "development"
+preserve_hierarchy: true
+files:
+  - source: /localization/en-SG.translation.json
+    translation: /localization/%locale%.translation.json
+    dest: translation.json
