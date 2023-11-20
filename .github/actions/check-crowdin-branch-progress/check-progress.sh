@@ -32,6 +32,8 @@ if [ -n "$BRANCH_ID" ]; then
   BRANCHES=$(echo "$BRANCH_PROGRESS" | jq -r '.data')
   echo "$BRANCHES"
   echo "separator ---->"
+  echo "${#BRANCHES[@]}"
+  echo "separator ---->"
 
   progress="0"
 
