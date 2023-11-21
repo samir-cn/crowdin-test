@@ -36,17 +36,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # - name: Check branch name
-      #   uses: propertyguru/mobile/actions/branch@v3.0.1
-
-      - name: Extract branch name and format
-        id: format-branch
-        shell: bash
-        run: |
-          BRANCH=${{ github.head_ref }}
-          FORMATTED_BRANCH=${BRANCH//\//-}
-          echo "branch=$FORMATTED_BRANCH" >> $GITHUB_OUTPUT
-
       - name: Check changed files
         id: changed-files
         uses: tj-actions/changed-files@v40
@@ -55,15 +44,26 @@ jobs:
             source:
               - localization/en-SG.translation.json
 
-      - name: Upload new source
+      # - name: Check branch name
+      #   uses: propertyguru/mobile/actions/branch@v3.0.1
+
+      - name: Extract branch name and format
+        id: format-branch
         if: steps.changed-files.outputs.source_any_changed == 'true'
+        uses: ./.github/actions/format-branch-name
+        with:
+          format-type: 'crowdin'
+          branch-name: ${{ github.head_ref }}
+
+      - name: Upload new source
+        if: steps.changed-files.outputs.source_any_changed == 'true' && steps.format-branch.outputs.formatted-branch != ''
         uses: crowdin/github-action@v1
         with:
           upload_sources: true
           upload_translations: true
           auto_approve_imported: true
           import_eq_suggestions: true
-          crowdin_branch_name: ${{ steps.format-branch.outputs.branch }}
+          crowdin_branch_name: ${{ steps.format-branch.outputs.formatted-branch }}
           config: 'crowdin.yml'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -96,14 +96,23 @@ jobs:
           project-id: ${{ env.CROWDIN_PROJECT_ID }}
           personal-token: ${{ secrets.CROWDIN_TOKEN }}
 
+      - name: Format branch name
+        id: format-branch
+        if: steps.branch-progress.outputs.is-ready == 'true' && steps.branch-progress.outputs.branch-name != ''
+        uses: ./.github/actions/format-branch-name
+        with:
+          format-type: 'github'
+          branch-name: ${{ steps.branch-progress.outputs.branch-name }}
+
       - name: Download translations
-        if: steps.branch-progress.outputs.is-ready == 'true'
+        if: steps.branch-progress.outputs.is-ready == 'true' && steps.format-branch.outputs.formatted-branch != ''
         uses: crowdin/github-action@v1
         with:
+          upload_sources: false
           download_translations: true
           crowdin_branch_name: ${{ steps.branch-progress.outputs.branch-name }}
           config: 'crowdin.yml'
-          pull_request_base_branch_name: test-new-crowdin-new
+          pull_request_base_branch_name: ${{ steps.format-branch.outputs.formatted-branch }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ env.CROWDIN_PROJECT_ID }}
@@ -146,16 +155,16 @@ jobs:
 
       - name: Extract branch name and format
         id: format-branch
-        shell: bash
-        run: |
-          BRANCH=${{ github.head_ref }}
-          FORMATTED_BRANCH=${BRANCH//\//-}
-          echo "branch=$FORMATTED_BRANCH" >> $GITHUB_OUTPUT
+        if: steps.changed-files.outputs.source_any_changed == 'true'
+        uses: ./.github/actions/format-branch-name
+        with:
+          format-type: 'crowdin'
+          branch-name: ${{ github.head_ref }}
 
       - name: Delete branch in crowdin
         uses: ./.github/actions/delete-branch-crowdin
         if: steps.changed-files.outputs.source_any_changed == 'true'
         with:
-          branch-name: ${{ steps.format-branch.outputs.branch }}
+          branch-name: ${{ steps.format-branch.outputs.formatted-branch }}
           project-id: ${{ env.CROWDIN_PROJECT_ID }}
           personal-token: ${{ secrets.CROWDIN_TOKEN }}

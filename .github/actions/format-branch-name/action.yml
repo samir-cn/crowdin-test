@@ -1,0 +1,22 @@
+name: 'Format branch name'
+description: 'Formats branch name to be used in Crowdin and GitHub'
+inputs:
+  format-type:
+    description: 'crowdin | github'
+    required: true
+  branch-name:
+    description: 'Branch name to be formatted'
+    required: true
+outputs:
+  formatted-branch:
+    description: "Formatted branch name to be used depending on the format-type input"
+    value: ${{ steps.format-branch.outputs.formatted-branch }}
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        ./.github/actions/format-branch-name/format.sh \
+          -f ${{ inputs.format-type }} \
+          -b ${{ inputs.branch-name }}
+      id: format-branch
+      shell: bash
