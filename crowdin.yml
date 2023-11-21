@@ -6,3 +6,4 @@ files:
   - source: /localization/en-SG.translation.json
     translation: /localization/%locale%.translation.json
     dest: translation.json
+#
