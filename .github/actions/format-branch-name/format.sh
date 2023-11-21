@@ -22,11 +22,11 @@ echo "::group::Format branch for $FORMAT_TYPE"
 
 FORMATTED_BRANCH=""
 
-if [ FORMAT_TYPE == "crowdin" ]; then
+if [ "$FORMAT_TYPE" == "crowdin" ]; then
   BRANCH_WITHOUT_DASH=${BRANCH_NAME//\-/_}
   BRANCH_WITHOUT_SLASH=${BRANCH_WITHOUT_DASH//\//-}
   FORMATTED_BRANCH=$BRANCH_WITHOUT_SLASH
-elif [ FORMAT_TYPE == "github" ]; then
+elif [ "$FORMAT_TYPE" == "github" ]; then
   BRANCH_WITH_SLASH=${BRANCH_NAME//\-/\/}
   BRANCH_WITH_DASH=${BRANCH_WITH_SLASH//\_/-}
   FORMATTED_BRANCH=$BRANCH_WITH_DASH
