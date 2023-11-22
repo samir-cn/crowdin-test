@@ -5,6 +5,8 @@ on:
     types: [opened, synchronize, closed]
     branches:
       - main
+    paths:
+      - 'localization/en-SG.translation.json'
   repository_dispatch:
     types: [crowdin]
 
@@ -36,27 +38,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Check changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v40
-        with:
-          files_yaml: |
-            source:
-              - localization/en-SG.translation.json
+      # - name: Check changed files
+      #   id: changed-files
+      #   uses: tj-actions/changed-files@v40
+      #   with:
+      #     files_yaml: |
+      #       source:
+      #         - localization/en-SG.translation.json
 
       # - name: Check branch name
       #   uses: propertyguru/mobile/actions/branch@v3.0.1
 
       - name: Extract branch name and format
         id: format-branch
-        if: steps.changed-files.outputs.source_any_changed == 'true'
         uses: ./.github/actions/format-branch-name
         with:
           format-type: 'crowdin'
           branch-name: ${{ github.head_ref }}
 
       - name: Upload new source
-        if: steps.changed-files.outputs.source_any_changed == 'true' && steps.format-branch.outputs.formatted-branch != ''
+        if: steps.format-branch.outputs.formatted-branch != ''
         uses: crowdin/github-action@v1
         with:
           upload_sources: true
@@ -130,16 +131,15 @@ jobs:
       # - name: Check branch name
       #   uses: propertyguru/mobile/actions/branch@v3.0.1
 
-      - name: Check changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v40
-        with:
-          files_yaml: |
-            source:
-              - localization/en-SG.translation.json
+      # - name: Check changed files
+      #   id: changed-files
+      #   uses: tj-actions/changed-files@v40
+      #   with:
+      #     files_yaml: |
+      #       source:
+      #         - localization/en-SG.translation.json
 
       - name: Upload new source
-        if: steps.changed-files.outputs.source_any_changed == 'true'
         uses: crowdin/github-action@v1
         with:
           upload_sources: true
@@ -155,7 +155,6 @@ jobs:
 
       - name: Extract branch name and format
         id: format-branch
-        if: steps.changed-files.outputs.source_any_changed == 'true'
         uses: ./.github/actions/format-branch-name
         with:
           format-type: 'crowdin'
