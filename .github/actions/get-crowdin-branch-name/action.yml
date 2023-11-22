@@ -1,5 +1,5 @@
-name: 'Check branch progress'
-description: 'Checks the progress pf branch on Crowdin'
+name: 'Get branch name from Crowdin'
+description: 'Gets branch name from Crowdin API by branch id from the webhook payload'
 inputs:
   project-id:
     description: 'Project identifier from Crowdin'
@@ -13,17 +13,14 @@ inputs:
 outputs:
   branch-name:
     description: "Branch name from Crowdin API"
-    value: ${{ steps.branch-progress.outputs.branch-name }}
-  is-ready:
-    description: "Indicator if branch is ready to download translations"
-    value: ${{ steps.branch-progress.outputs.is-ready }}
+    value: ${{ steps.get-branch-name.outputs.branch-name }}
 runs:
   using: 'composite'
   steps:
     - run: |
-        ./.github/actions/check-crowdin-branch-progress/check-progress.sh \
+        ./.github/actions/get-crowdin-branch-name/check-progress.sh \
           -p ${{ inputs.project-id }} \
           -b ${{ inputs.branch-id }} \
           -t ${{ inputs.personal-token }}
-      id: branch-progress
+      id: get-branch-name
       shell: bash

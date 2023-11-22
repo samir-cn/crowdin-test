@@ -23,38 +23,15 @@ done
 echo "::group::Check Crowdin branch progress"
 
 if [ -n "$BRANCH_ID" ]; then
-  BRANCH_PROGRESS=$(curl -s \
-    --request GET "https://api.crowdin.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/languages/progress" \
+  BRANCH_NAME=""
+  BRANCH_DATA=$(curl -s \
+    --request GET "https://api.crowdin.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID" \
     -H 'Content-type: application/json' \
     -H "Authorization: Bearer $PERSONAL_TOKEN")
-  exit_code_branch=$?
-
-  IS_READY="true"
-
-  for i in {0..3}
-  do
-    BRANCH_DATA=$(echo "$BRANCH_PROGRESS" | jq -r ".data[$i]")
-    translationProgress=$(echo "$BRANCH_DATA" | jq '.data.translationProgress')
-    approvalProgress=$(echo "$BRANCH_DATA" | jq '.data.approvalProgress')
-
-    if [ "$translationProgress" -ne 100 ] || [ "$approvalProgress" -ne 100 ]; then
-      IS_READY="false"
-      break
-    fi
-  done
-
-  BRANCH_NAME=""
-  if $IS_READY; then
-    BRANCH_DATA=$(curl -s \
-      --request GET "https://api.crowdin.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID" \
-      -H 'Content-type: application/json' \
-      -H "Authorization: Bearer $PERSONAL_TOKEN")
-    BRANCH_NAME=$(echo "$BRANCH_DATA" | jq -r ".data.name")
-  fi
+  BRANCH_NAME=$(echo "$BRANCH_DATA" | jq -r ".data.name")
 
   echo "$BRANCH_NAME"
   echo "branch-name=$BRANCH_NAME" >> $GITHUB_OUTPUT
-  echo "is-ready=$IS_READY" >> $GITHUB_OUTPUT
   
   if [ $exit_code_branch -ne 0 ]; then
     echo "Error with getting current branch progress from Crowdin"

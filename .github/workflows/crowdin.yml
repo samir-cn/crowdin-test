@@ -88,9 +88,9 @@ jobs:
       - name: Check client payload
         run: echo ${{ github.event.client_payload.branchId }}
 
-      - name: Check branch progress on Crowdin
-        uses: ./.github/actions/check-crowdin-branch-progress
-        id: branch-progress
+      - name: Get branch name from Crowdin
+        uses: ./.github/actions/get-crowdin-branch-name
+        id: get-branch-name
         with:
           branch-id: ${{ github.event.client_payload.branchId }}
           project-id: ${{ env.CROWDIN_PROJECT_ID }}
@@ -98,19 +98,19 @@ jobs:
 
       - name: Format branch name
         id: format-branch
-        if: steps.branch-progress.outputs.is-ready == 'true' && steps.branch-progress.outputs.branch-name != ''
+        if: steps.get-branch-name.outputs.branch-name != ''
         uses: ./.github/actions/format-branch-name
         with:
           format-type: 'github'
-          branch-name: ${{ steps.branch-progress.outputs.branch-name }}
+          branch-name: ${{ steps.get-branch-name.outputs.branch-name }}
 
       - name: Download translations
-        if: steps.branch-progress.outputs.is-ready == 'true' && steps.format-branch.outputs.formatted-branch != ''
+        if: steps.format-branch.outputs.formatted-branch != ''
         uses: crowdin/github-action@v1
         with:
           upload_sources: false
           download_translations: true
-          crowdin_branch_name: ${{ steps.branch-progress.outputs.branch-name }}
+          crowdin_branch_name: ${{ steps.get-branch-name.outputs.branch-name }}
           config: 'crowdin.yml'
           pull_request_base_branch_name: ${{ steps.format-branch.outputs.formatted-branch }}
         env:
