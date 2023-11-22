@@ -21,6 +21,7 @@ done
 echo "::group::Format branch for $FORMAT_TYPE"
 
 FORMATTED_BRANCH=""
+LOCALIZATION_BRANCH=""
 
 if [ "$FORMAT_TYPE" == "crowdin" ]; then
   BRANCH_WITHOUT_DASH=${BRANCH_NAME//\-/_}
@@ -30,11 +31,13 @@ elif [ "$FORMAT_TYPE" == "github" ]; then
   BRANCH_WITH_SLASH=${BRANCH_NAME//\-/\/}
   BRANCH_WITH_DASH=${BRANCH_WITH_SLASH//\_/-}
   FORMATTED_BRANCH=$BRANCH_WITH_DASH
+  LOCALIZATION_BRANCH="$FORMATTED_BRANCH-localization"
 else
   echo "Format type not supported"
   exit 1
 fi
 
 echo "formatted-branch=$FORMATTED_BRANCH" >> $GITHUB_OUTPUT
+echo "localization-branch=$LOCALIZATION_BRANCH" >> $GITHUB_OUTPUT
 
 echo "::endgroup::"

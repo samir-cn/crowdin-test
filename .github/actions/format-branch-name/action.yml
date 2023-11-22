@@ -11,6 +11,9 @@ outputs:
   formatted-branch:
     description: "Formatted branch name to be used depending on the format-type input"
     value: ${{ steps.format-branch.outputs.formatted-branch }}
+  localization-branch:
+    description: "Branch name to be used by Crowdin action to create and sync Pull requests against our target branch"
+    value: ${{ steps.format-branch.outputs.localization-branch }}
 runs:
   using: 'composite'
   steps:

@@ -111,6 +111,7 @@ jobs:
         with:
           upload_sources: false
           download_translations: true
+          localization_branch_name: ${{ steps.get-branch-name.outputs.localization-branch }}
           crowdin_branch_name: ${{ steps.get-branch-name.outputs.branch-name }}
           config: 'crowdin.yml'
           pull_request_base_branch_name: ${{ steps.format-branch.outputs.formatted-branch }}
