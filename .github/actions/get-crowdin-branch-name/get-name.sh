@@ -32,11 +32,6 @@ if [ -n "$BRANCH_ID" ]; then
 
   echo "$BRANCH_NAME"
   echo "branch-name=$BRANCH_NAME" >> $GITHUB_OUTPUT
-  
-  if [ $exit_code_branch -ne 0 ]; then
-    echo "Error with getting current branch progress from Crowdin"
-    exit 1
-  fi
 else
   echo "Branch with this name was not found in Crowdin, couldn't get progress value for it."
   exit 1
