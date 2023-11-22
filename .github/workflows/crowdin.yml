@@ -163,7 +163,6 @@ jobs:
 
       - name: Delete branch in crowdin
         uses: ./.github/actions/delete-branch-crowdin
-        if: steps.changed-files.outputs.source_any_changed == 'true'
         with:
           branch-name: ${{ steps.format-branch.outputs.formatted-branch }}
           project-id: ${{ env.CROWDIN_PROJECT_ID }}
