@@ -18,7 +18,7 @@ runs:
   using: 'composite'
   steps:
     - run: |
-        ./.github/actions/get-crowdin-branch-name/check-progress.sh \
+        ./.github/actions/get-crowdin-branch-name/get-name.sh \
           -p ${{ inputs.project-id }} \
           -b ${{ inputs.branch-id }} \
           -t ${{ inputs.personal-token }}
