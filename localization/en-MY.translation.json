@@ -548,7 +548,7 @@
   "edit_listings.cancel_dialog_title": "Are you sure that you want to cancel listing creation ?",
   "edit_listings.cancel_dialog_description": "All unsaved changes will be discarded",
   "edit_listing.date_not_valid_error": "Date is not valid",
-  "edit_listing.fix_errors": "Please, fix the erorrs before saving listing",
+  "edit_listing.fix_errors": "Please fix the errors before saving the listing",
   "edit_listing.sqft": "sqft",
   "edit_listing.sqm": "sqm",
   "edit_listing.lost_your_changes": "Closing this will discard unsaved changes you have made. Do you still want to proceed?",
@@ -1455,6 +1455,7 @@
   "lead.details.today.at": "Today • {time}",
   "lead.details.recently.contacts_singular": "{total} agent in 7 days",
   "lead.details.recently.contacts_multiple": "{total} agents in 7 days",
+  "lead.details.recently.contacts_more_than_ten_agents": "More than 10 agents in 7 days",
   "lead.details.looking.for.address": "{type} in {district}",
   "widget.lead.view_all": "View All",
   "lead.no_result_filters_match": "No results found. Please try adjusting your filter criteria.",
@@ -1594,9 +1595,5 @@
   "demo-translation": "Demo",
   "demo-translation-2": "Demo2Malaysia",
   "demo-translation-3": "Demo3 translation",
-  "demo-new": "new test for demo 2",
-  "demo-new-2": "new test for demo 2",
-  "demo-new-3": "new test for demo 3",
-  "demo-mpt-3": "new mpt 3MY",
-  "demo-mpt-4": "new mpt 4my"
+  "mrt_success_banner": "Congratulations you're now a MRT Featured Agent!"
 }
