@@ -1455,6 +1455,7 @@
   "lead.details.today.at": "Today • {time}",
   "lead.details.recently.contacts_singular": "{total} agent in 7 days",
   "lead.details.recently.contacts_multiple": "{total} agents in 7 days",
+  "lead.details.recently.contacts_more_than_ten_agents": "More than 10 agents in 7 days",
   "lead.details.looking.for.address": "{type} in {district}",
   "widget.lead.view_all": "View All",
   "lead.no_result_filters_match": "No results found. Please try adjusting your filter criteria.",
@@ -1594,9 +1595,6 @@
   "demo-translation": "Demo",
   "demo-translation-2": "Demo2Indonesia2",
   "demo-translation-3": "Demo3 translation",
-  "demo-new": "new test for demo 2",
-  "demo-new-2": "new test for demo 2",
-  "demo-new-3": "new test for demo 3",
-  "demo-mpt-3": "new mpt 3ind",
-  "demo-mpt-4": "new mpt 4ind"
+  "mrt_success_banner": "Congratulations you're now a MRT Featured Agent!",
+  "more.screen.dev_option": "Developer Options"
 }
